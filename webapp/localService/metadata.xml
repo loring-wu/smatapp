@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://ldcix4x.wdf.sap.corp:44311/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://ldcix4x.wdf.sap.corp:44311/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://ldcix4x.wdf.sap.corp:44311/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://ldcix4x.wdf.sap.corp:44311/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://ldcix4x.wdf.sap.corp:44311/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="cds_zsmat_memo_log" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="MemoDiffType" sap:label="Memory Log Differentials of Objects" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="TraceKey"/>
+                    <PropertyRef Name="Progarm"/>
+                    <PropertyRef Name="Include"/>
+                    <PropertyRef Name="EventType"/>
+                    <PropertyRef Name="Eventname"/>
+                </Key>
+                <Property Name="TraceKey" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Memo log num" sap:quickinfo="MEMO LOG NUMBER"/>
+                <Property Name="Progarm" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Program" sap:quickinfo="TPDA: Program"/>
+                <Property Name="Include" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Include" sap:quickinfo="tpda: Program Include"/>
+                <Property Name="EventType" Type="Edm.String" Nullable="false" MaxLength="30" sap:display-format="UpperCase" sap:label="Event Type" sap:quickinfo="TPDA: Program Event Type"/>
+                <Property Name="Eventname" Type="Edm.String" Nullable="false" MaxLength="61" sap:display-format="UpperCase" sap:label="Event" sap:quickinfo="TPDA: Event (Form, Method...)"/>
+                <Property Name="LocalClassName" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="Class" sap:quickinfo="TPDA: Name of a Local Class"/>
+                <Property Name="MinUsedMemery" Type="Edm.Decimal" Precision="20" Scale="0" sap:label="64 Bit Integer" sap:quickinfo="DEC type that is suitable for 64 bit integer"/>
+                <Property Name="MaxUsedMemery" Type="Edm.Decimal" Precision="20" Scale="0" sap:label="64 Bit Integer" sap:quickinfo="DEC type that is suitable for 64 bit integer"/>
+                <Property Name="MinAllocatedMemory" Type="Edm.Decimal" Precision="20" Scale="0" sap:label="64 Bit Integer" sap:quickinfo="DEC type that is suitable for 64 bit integer"/>
+                <Property Name="MaxAllocatedMemory" Type="Edm.Decimal" Precision="20" Scale="0" sap:label="64 Bit Integer" sap:quickinfo="DEC type that is suitable for 64 bit integer"/>
+                <Property Name="UsedMemoryDiff" Type="Edm.Decimal" Precision="21" Scale="0"/>
+                <Property Name="AllocatedMemoryDiff" Type="Edm.Decimal" Precision="21" Scale="0"/>
+            </EntityType>
+            <EntityType Name="TraceHeaderType" sap:label="Memory Log Header" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="TraceKey"/>
+                </Key>
+                <Property Name="TraceKey" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Memo log num" sap:quickinfo="MEMO LOG NUMBER"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="100" sap:label="Description"/>
+                <Property Name="UserId" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="User Name"/>
+                <Property Name="CreatedOn" Type="Edm.DateTimeOffset" Precision="0" sap:label="Time Stamp" sap:quickinfo="DSD Connector: Time Stamp"/>
+                <NavigationProperty Name="to_Diff" Relationship="cds_zsmat_memo_log.assoc_801F312A8F3C16E6204967C10C67F7C8" FromRole="FromRole_assoc_801F312A8F3C16E6204967C10C67F7C8" ToRole="ToRole_assoc_801F312A8F3C16E6204967C10C67F7C8"/>
+                <NavigationProperty Name="to_Item" Relationship="cds_zsmat_memo_log.assoc_BC8AEF48E12C56474CEB818FD7D67B38" FromRole="FromRole_assoc_BC8AEF48E12C56474CEB818FD7D67B38" ToRole="ToRole_assoc_BC8AEF48E12C56474CEB818FD7D67B38"/>
+            </EntityType>
+            <EntityType Name="TraceItemType" sap:semantics="aggregate" sap:label="Memory Log Item" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TraceKey" Type="Edm.String" MaxLength="10" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Memo log num" sap:quickinfo="MEMO LOG NUMBER"/>
+                <Property Name="SequenceNumber" Type="Edm.Int32" sap:aggregation-role="dimension" sap:label="Sequence Number"/>
+                <Property Name="ProgramName" Type="Edm.String" MaxLength="40" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Program" sap:quickinfo="TPDA: Program"/>
+                <Property Name="CodeLineNo" Type="Edm.Int32" sap:aggregation-role="dimension" sap:label="Line Number" sap:quickinfo="TPDA: Source Code Line Number"/>
+                <Property Name="EventType" Type="Edm.String" MaxLength="30" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Event Type" sap:quickinfo="TPDA: Program Event Type"/>
+                <Property Name="EventName" Type="Edm.String" MaxLength="61" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Event" sap:quickinfo="TPDA: Event (Form, Method...)"/>
+                <Property Name="LocalClass" Type="Edm.String" MaxLength="30" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:label="Class" sap:quickinfo="TPDA: Name of a Local Class"/>
+                <Property Name="UsedMemory" Type="Edm.Decimal" Precision="20" Scale="0" sap:aggregation-role="dimension" sap:label="64 Bit Integer" sap:quickinfo="DEC type that is suitable for 64 bit integer"/>
+                <Property Name="AllocatedMemory" Type="Edm.Decimal" Precision="20" Scale="0" sap:aggregation-role="dimension" sap:label="64 Bit Integer" sap:quickinfo="DEC type that is suitable for 64 bit integer"/>
+                <Property Name="AllocatedMemoryByte" Type="Edm.Decimal" Precision="20" Scale="0" sap:aggregation-role="measure" sap:label="64 Bit Integer" sap:quickinfo="DEC type that is suitable for 64 bit integer" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="assoc_BC8AEF48E12C56474CEB818FD7D67B38" sap:content-version="1">
+                <End Type="cds_zsmat_memo_log.TraceHeaderType" Multiplicity="1" Role="FromRole_assoc_BC8AEF48E12C56474CEB818FD7D67B38"/>
+                <End Type="cds_zsmat_memo_log.TraceItemType" Multiplicity="*" Role="ToRole_assoc_BC8AEF48E12C56474CEB818FD7D67B38"/>
+            </Association>
+            <Association Name="assoc_801F312A8F3C16E6204967C10C67F7C8" sap:content-version="1">
+                <End Type="cds_zsmat_memo_log.TraceHeaderType" Multiplicity="1" Role="FromRole_assoc_801F312A8F3C16E6204967C10C67F7C8"/>
+                <End Type="cds_zsmat_memo_log.MemoDiffType" Multiplicity="*" Role="ToRole_assoc_801F312A8F3C16E6204967C10C67F7C8"/>
+            </Association>
+            <EntityContainer Name="cds_zsmat_memo_log_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="MemoDiff" EntityType="cds_zsmat_memo_log.MemoDiffType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="TraceHeader" EntityType="cds_zsmat_memo_log.TraceHeaderType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="TraceItem" EntityType="cds_zsmat_memo_log.TraceItemType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <AssociationSet Name="assoc_BC8AEF48E12C56474CEB818FD7D67B38" Association="cds_zsmat_memo_log.assoc_BC8AEF48E12C56474CEB818FD7D67B38" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="TraceHeader" Role="FromRole_assoc_BC8AEF48E12C56474CEB818FD7D67B38"/>
+                    <End EntitySet="TraceItem" Role="ToRole_assoc_BC8AEF48E12C56474CEB818FD7D67B38"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_801F312A8F3C16E6204967C10C67F7C8" Association="cds_zsmat_memo_log.assoc_801F312A8F3C16E6204967C10C67F7C8" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="TraceHeader" Role="FromRole_assoc_801F312A8F3C16E6204967C10C67F7C8"/>
+                    <End EntitySet="MemoDiff" Role="ToRole_assoc_801F312A8F3C16E6204967C10C67F7C8"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations Target="cds_zsmat_memo_log.cds_zsmat_memo_log_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="None"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="cds_zsmat_memo_log.cds_zsmat_memo_log_Entities/TraceItem" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>ID</PropertyPath>
+                                <PropertyPath>AllocatedMemoryByte</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>ID</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="https://ldcix4x.wdf.sap.corp:44311/sap/opu/odata/sap/ZSMAT_UI_MEMO_V2/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://ldcix4x.wdf.sap.corp:44311/sap/opu/odata/sap/ZSMAT_UI_MEMO_V2/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
